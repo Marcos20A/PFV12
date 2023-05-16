@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<f:loadBundle basename="com.perfecciondigital.tallerprimefaces.propiedades.messages" var="msg"></f:loadBundle>
+
+<h:head>
+	
+
+</h:head>
+<h:body>
+<h:form>
+
+ <h:commandButton value="Generar Listado" action="#{mjzBean.cargarListado()}" />
+ <br />
+ 
+ 
+ <style>
+ 
+ 	.fixHeader{
+ 	
+ 	display: inline-block;
+ 	margin-right: 215px;
+ 	margin-left: 75px;
+ 	
+ 	
+ 	}
+ 	
+ 	.ui-datatable table {
+    width: 100% !important;
+    table-layout: auto !Important;
+    
+}
+
+.custom-outputPanel{
+
+	white-space:normal;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	max-width:100%;
+
+}
+
+.my-sort-header {
+  cursor: pointer;
+  position: relative;
+  text-align: center; /* Centrar el headertext */
+  background-image: url('meme.png');
+}
+
+.my-sort-header::before {
+  content: "";
+  display: block; /* Cambiar a bloque para que el icono esté arriba/después del headertext */
+  margin: 0 auto; /* Centrar horizontalmente el icono */
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  background-image: url('meme.png');
+}
+
+.my-sort-header.asc::before {
+  content: "";
+  margin-bottom: -4px; /* Ajustar margen inferior para que el icono esté arriba del headertext */
+  border-bottom: 4px solid #000; /* Icono de ordenamiento ascendente */
+  background-image: url('meme.png');
+}
+
+.my-sort-header.desc::before {
+  content: "";
+  margin-top: -4px; /* Ajustar margen superior para que el icono esté debajo del headertext */
+  border-top: 4px solid #000; /* Icono de ordenamiento descendente */
+  background-image: url('meme.png');
+}
+
+.my-sort-icon{
+
+	width:16px;
+	height:16px;
+	background-image: url('meme.png');
+	background-size:contain;
+
+}
+
+body .ui-datatable thead th .ui-sortable-column-icon.ui-icon-triangle-1-n{
+		
+	width:16px;
+	height:16px;
+	background-image: url('prueba3.png');
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center;
+	}
+
+body .ui-datatable thead th .ui-sortable-column-icon.ui-icon-triangle-1-s{
+		
+	width:16px;
+	height:16px;
+	background-image: url('prueba2.png');
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center;
+	}
+
+.ui-datatable .ui-column-filter {
+    display: block;
+    width: 90% !important;
+    margin-top:5px;
+    max-width:100%;
+}
+
+	.fixbutton{
+	
+		text-align:center !important;
+	}
+	
+ 
+ </style>
+ 
+ <p:dataTable id="tbl" var="visitante" value="#{mjzBean.visitantes}"
+ 			 resizableColumns="true" editable="true" paginator="true" 
+ 			 rows="10" paginatorPosition="bottom" emptyMessage="Sin información"
+ 			 sortMode="single">
+ 			 	 
+    <p:column headerText="Nombre" filterBy="#{visitante.nombre}" sortBy="#{visitante.nombre}"  >
+         <f:facet name="header">
+     		<h:outputText value="Nombre" />
+         </f:facet>
+         <h:outputText value="#{visitante.nombre}"/>
+     </p:column>
+      
+<!--      <p:column filterBy="#{visitante.apellido}" > -->
+<!--          <f:facet name="header"> -->
+<!--         <div style="display:flex; flex-direction:column;"> -->
+<!--      		<h:outputText value="&#9650;" escape="false" />  Se puede agregar rendered="#{bean.sortField eq 'nombre' and not bean.sortOrder}" para funcionalidad -->
+<!--      		<h5 style="margin-top: 0; margin-bottom:0;">Apellido</h5> -->
+<!--      		<h:outputText value="&#9660;" /> Se puede agregar rendered="#{bean.sortField eq 'nombre' and bean.sortOrder}" para funcionalidad -->
+<!--      	</div> -->
+<!--          </f:facet> -->
+<!--          <h:outputText value="#{visitante.apellido}"/> -->
+<!--      </p:column> -->
+
+     <p:column headerText="Apellido" sortBy="#{visitante.apellido}" filterBy="#{visitante.apellido}" >
+         <f:facet name="header">
+         	<h:outputText value="Apellido" />
+         </f:facet>
+         <h:outputText value="#{visitante.apellido}"/>
+     </p:column>
+     
+     <p:column sortBy="#{visitante.edad}" filterBy="#{visitante.edad}" >
+         <f:facet name="header">
+         	<h:outputText value="Edad" />
+         </f:facet>
+         <h:outputText value="#{visitante.edad}" />
+     </p:column>
+  
+     <p:column sortBy="#{visitante.pais}" filterBy="#{visitante.pais}" >
+     	<f:facet name="header">
+     		<h:outputText value="País" />
+     	</f:facet>
+        <h:outputText value="#{visitante.pais}" />
+     </p:column>
+     
+     <p:column name="header" style="width:50px" exportable="false">
+     	<f:facet name="header">
+     		<h:outputText value="Editar" />	
+     	</f:facet>
+     	<p:rowEditor/>
+     </p:column>
+     
+ </p:dataTable>
+ 
+ <br />  
+ 
+    <p:commandButton value="xSubmit" styleClass="mr-2 mb-2" ajax="false">
+    <p:dataExporter type="xls" target="tbl" fileName="visitantes" postProcessor="#{customizedDocumentsView.postProcessXLS}"></p:dataExporter>
+    </p:commandButton>
+    
+     <h:commandLink value="Exportar">
+        <p:dataExporter type="xls" 
+        				target="tbl" 
+        				fileName="visitantes" 
+        				postProcessor="#{customizedDocumentsView.postProcessXLS}"/>
+    </h:commandLink>
+
+</h:form>
+
+<br/>
+
+<h:form>
+		
+<p:inputText id="myInput" widgetVar="myInputWidgetVar" onchange="validarInput();" />
+
+<p:dialog widgetVar="myDialogWidgetVar" modal="true" header="Validación de Entrada" dynamic="true" closable="false" styleClass="fixbutton">
+  <p:outputLabel value="Valor de texto" />
+  <br/>
+  <br/>
+  <p:commandButton value="Cerrar" onclick="PF('myDialogWidgetVar').hide();" />
+</p:dialog>
+
+<p:dialog widgetVar="myDialogWidgetVar2" modal="true" header="Validación de Entrada" dynamic="true" closable="false" styleClass="fixbutton">
+  <p:outputLabel value="Valor numérico" />
+  <br/>
+  <br/>
+  <p:commandButton value="Cerrar" onclick="PF('myDialogWidgetVar2').hide();" />
+</p:dialog>
+
+<br/>
+
+	<script type="text/javascript">
+
+	function validarInput() {
+		  var valor = PF('myInputWidgetVar').getJQ().val();
+
+		  if (isNaN(valor)) {
+		    // El valor NO es un número, es texto
+		    PF('myDialogWidgetVar').show();
+		  } else {
+		    // El valor ES un número
+		    PF('myDialogWidgetVar2').show();
+		  }
+		 
+		}
+	</script>
+	
+
+</h:form>
+<br/>
+<br/>
+
+<h:form id="formValidate">
+<h2>Input para validar nombre</h2> 
+<br/>
+		<!-- Nada más aceptará números del 0 al 9 -->
+    <p:inputText id="nombre" required="true" requiredMessage="El campo es obligatorio llenarlo." 
+    	label="Nombre" widgetVar="intNum1" onkeypress="if(event.charCode &lt; 48 || event.charCode &gt; 57) { alert('Solo se permiten números'); return false; }" />
+    	
+    <p:message for="nombre" />
+    <br/>
+    <p:inputText id="numero2" required="true" requiredMessage="El campo es obligatorio llenarlo." 
+    	label="numero2" widgetVar="intNum2" onkeypress="return /[a-zA-Z]/i.test(event.key)" /> <!-- Nada más aceptará datos de texto  -->
+    	<p:message for="numero2" />
+    <br/>
+    <p:commandButton value="Guardar" onclick="validarInput2(); return false;" update=":formValidate" />
+    
+    
+    <script type="text/javascript">
+    
+    function validarInput2() {
+    	  var intValor1 = parseInt(PF('intNum1').getJQ().val());
+    	  var intValor2 = parseInt(PF('intNum2').getJQ().val());
+    	  var intRes = intValor1 + intValor2;
+
+    	  console.log(intRes);
+    	}
+
+	</script>
+	
+    
+    
+    
+</h:form>
+
+</h:body>
+</ui:composition>
